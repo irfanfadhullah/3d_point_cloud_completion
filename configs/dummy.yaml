@@ -1,0 +1,24 @@
+# Dummy Model Configuration (for pipeline testing)
+_base_: default.yaml
+
+model:
+  name: "DummyModel"
+  config:
+    num_pred: 16384
+    num_coarse: 1024
+    feat_dim: 256
+
+dataset:
+  train: "ShapeNet"
+  test: "ShapeNet"
+
+train:
+  batch_size: 4
+  n_epochs: 3
+  learning_rate: 0.001
+  lr_decay: 2
+  warmup_epochs: 1
+  num_workers: 0
+
+output:
+  out_path: "results/dummy"

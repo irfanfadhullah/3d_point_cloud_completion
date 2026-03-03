@@ -1,0 +1,50 @@
+# AdaPoinTr Model Configuration
+_base_: default.yaml
+
+model:
+  name: "AdaPoinTr"
+  config:
+    encoder_type: graph
+    num_query: 96
+    num_points: 6144
+    global_feature_dim: 1024
+    center_num: [512, 128]
+    decoder_type: fc
+    # Denoising
+    denoise_length: 64
+
+    # Encoder config
+    encoder_config:
+      embed_dim: 384
+      depth: 6
+      num_heads: 6
+      k: 8
+      n_group: 2
+      block_style_list: ["attn-deform", "attn", "attn", "attn", "attn", "attn"]
+      combine_style: concat
+
+    # Decoder config
+    decoder_config:
+      embed_dim: 384
+      depth: 8
+      num_heads: 6
+      k: 8
+      n_group: 2
+      self_attn_block_style_list: ["attn-deform", "attn", "attn", "attn", "attn", "attn", "attn", "attn"]
+      self_attn_combine_style: concat
+      cross_attn_block_style_list: ["attn-deform", "attn", "attn", "attn", "attn", "attn", "attn", "attn"]
+      cross_attn_combine_style: concat
+
+dataset:
+  train: "ShapeNet"
+  test: "ShapeNet"
+
+train:
+  batch_size: 16
+  n_epochs: 400
+  learning_rate: 0.0005
+  lr_decay: 150
+  warmup_epochs: 20
+
+output:
+  out_path: "results/adapointr"

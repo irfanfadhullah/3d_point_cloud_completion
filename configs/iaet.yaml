@@ -1,0 +1,23 @@
+_base_: default.yaml
+
+model:
+  name: IAET
+  config:
+    dim_feat: 256
+    num_points: 256
+    up_factors: [2, 2, 2]
+    num_pred: 2048
+    use_image: true  # requires ViPC-style dataset with images
+
+dataset:
+  name: ViPC
+
+train:
+  epochs: 300
+  lr: 0.0001
+  batch_size: 16
+  scheduler: step
+  step_size: 50
+  gamma: 0.7
+
+output_path: results/iaet

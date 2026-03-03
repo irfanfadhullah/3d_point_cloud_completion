@@ -1,0 +1,24 @@
+# PFNet Model Configuration
+_base_: default.yaml
+
+model:
+  name: "PFNet"
+  config:
+    num_scales: 3
+    each_scales_size: 1
+    point_scales_list: [2048, 512, 256]
+    crop_point_num: 512
+
+dataset:
+  train: "ShapeNet"
+  test: "ShapeNet"
+
+train:
+  batch_size: 16
+  n_epochs: 400
+  learning_rate: 0.0001
+  lr_decay: 150
+  warmup_epochs: 20
+
+output:
+  out_path: "results/pfnet"

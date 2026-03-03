@@ -1,0 +1,4 @@
+# ninja log v7
+0	9402	1772153045960021594	/home/irfan/exploring current code/boilerplate_completion/extensions/gridding/build/temp.linux-x86_64-cpython-310/gridding_cuda.o	8a46f8a60f0281c6
+0	24070	1772153045960021594	/home/irfan/exploring current code/boilerplate_completion/extensions/gridding/build/temp.linux-x86_64-cpython-310/gridding.o	e079cfe510a93a0a
+1	24639	1772153045961021615	/home/irfan/exploring current code/boilerplate_completion/extensions/gridding/build/temp.linux-x86_64-cpython-310/gridding_reverse.o	c6e102bf4124c962

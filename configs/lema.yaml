@@ -1,0 +1,20 @@
+_base_: default.yaml
+
+model:
+  name: LEMA
+  config:
+    crop_point_num: 512
+    num_pred: 512
+
+dataset:
+  name: PCN
+
+train:
+  epochs: 300
+  lr: 0.0001
+  batch_size: 64
+  scheduler: step
+  step_size: 40
+  gamma: 0.5
+
+output_path: results/lema

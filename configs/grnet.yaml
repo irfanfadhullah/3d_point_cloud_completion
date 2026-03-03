@@ -1,0 +1,23 @@
+# GRNet Model Configuration
+_base_: default.yaml
+
+model:
+  name: "GRNet"
+  config:
+    num_pred: 16384
+    gridding_loss_scales: 32
+    gridding_loss_alphas: 0.1
+
+dataset:
+  train: "ShapeNet"
+  test: "ShapeNet"
+
+train:
+  batch_size: 1
+  n_epochs: 400
+  learning_rate: 0.001
+  lr_decay: 150
+  warmup_epochs: 20
+
+output:
+  out_path: "results/grnet"

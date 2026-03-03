@@ -1,0 +1,22 @@
+_base_: default.yaml
+
+model:
+  name: SDT
+  config:
+    num_coarse: 1024
+    num_fine: 2048
+    num_input: 2048
+    num_pred: 2048
+
+dataset:
+  name: PCN
+
+train:
+  epochs: 400
+  lr: 0.0001
+  batch_size: 32
+  scheduler: step
+  step_size: 100
+  gamma: 0.5
+
+output_path: results/sdt

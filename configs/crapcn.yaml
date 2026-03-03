@@ -1,0 +1,21 @@
+# CRA-PCN Model Configuration (PCN dataset variant)
+_base_: default.yaml
+
+model:
+  name: "CRAPCN"
+  config:
+    variant: "pcn"  # pcn, sn55, mvp
+
+dataset:
+  train: "ShapeNet"
+  test: "ShapeNet"
+
+train:
+  batch_size: 8
+  n_epochs: 400
+  learning_rate: 0.001
+  lr_decay: 150
+  warmup_epochs: 20
+
+output:
+  out_path: "results/crapcn"

@@ -1,0 +1,66 @@
+# ======================================================
+# Default Configuration for Point Cloud Completion
+# ======================================================
+# This is the base config. Model-specific configs inherit
+# from this using `_base_: default.yaml`.
+
+# General settings
+general:
+  seed: 1128
+  gpu: "0"
+
+# Model settings
+model:
+  name: "PCN"
+  # Model-specific hyperparameters go here per config file
+  config: {}
+
+# Dataset settings
+dataset:
+  train: "ShapeNet"
+  test: "ShapeNet"
+  n_input_points: 2048
+
+# Dataset paths
+datasets:
+  shapenet:
+    category_file_path: "./data/ShapeNet.json"
+    n_renderings: 8
+    n_points: 2048
+    partial_points_path: "./data/PCN/%s/partial/%s/%s/%02d.pcd"
+    complete_points_path: "./data/PCN/%s/complete/%s/%s.pcd"
+  completion3d:
+    category_file_path: "./data/Completion3D.json"
+    partial_points_path: "/path/to/datasets/Completion3D/%s/partial/%s/%s.h5"
+    complete_points_path: "/path/to/datasets/Completion3D/%s/gt/%s/%s.h5"
+  shapenet55:
+    category_file_path: "./data/ShapeNet55-34/ShapeNet-55/"
+    n_points: 2048
+    complete_points_path: "./data/ShapeNet55-34/shapenet_pc/%s"
+  mvp:
+    train_path: "./data/MVP/MVP_Train_CP.h5"
+    val_path: "./data/MVP/MVP_Test_CP.h5"
+    test_path: "./data/MVP/MVP_ExtraTest_Shuffled_CP.h5"
+
+# Training settings
+train:
+  batch_size: 32
+  n_epochs: 400
+  learning_rate: 0.001
+  lr_decay: 150
+  warmup_epochs: 20
+  weight_decay: 0
+  betas: [0.9, 0.999]
+  num_workers: 8
+  save_freq: 25
+
+# Testing settings
+test:
+  batch_size: 1
+  mode: "median"  # for ShapeNet55: easy/median/hard
+  output_results: true
+
+# Output directories
+output:
+  out_path: "results/"
+  test_path: "test/"

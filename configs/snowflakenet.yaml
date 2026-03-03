@@ -1,0 +1,25 @@
+# SnowFlakeNet Model Configuration
+_base_: default.yaml
+
+model:
+  name: "SnowFlakeNet"
+  config:
+    dim_feat: 512
+    num_pc: 256
+    num_p0: 512
+    radius: 1
+    up_factors: [1, 4, 8]
+
+dataset:
+  train: "ShapeNet"
+  test: "ShapeNet"
+
+train:
+  batch_size: 16
+  n_epochs: 400
+  learning_rate: 0.001
+  lr_decay: 150
+  warmup_epochs: 20
+
+output:
+  out_path: "results/snowflakenet"

@@ -1,0 +1,21 @@
+_base_: default.yaml
+
+model:
+  name: FDANet
+  config:
+    num_pred: 1024
+    num_input: 2048
+    k: 8
+
+dataset:
+  name: PCN
+
+train:
+  epochs: 300
+  lr: 0.001
+  batch_size: 32
+  scheduler: step
+  step_size: 50
+  gamma: 0.7
+
+output_path: results/fdanet

@@ -1,0 +1,23 @@
+# MSN Model Configuration
+_base_: default.yaml
+
+model:
+  name: "MSN"
+  config:
+    num_points: 8192
+    bottleneck_size: 1024
+    n_primitives: 16
+
+dataset:
+  train: "ShapeNet"
+  test: "ShapeNet"
+
+train:
+  batch_size: 16
+  n_epochs: 400
+  learning_rate: 0.001
+  lr_decay: 150
+  warmup_epochs: 20
+
+output:
+  out_path: "results/msn"

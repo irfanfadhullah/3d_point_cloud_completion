@@ -1,0 +1,4 @@
+# ninja log v7
+0	13174	1772174738551594570	/home/irfan/exploring current code/boilerplate_completion/extensions/furthestPointSampling/build/temp.linux-x86_64-cpython-310/sampling_gpu.o	11ee4f6d1ddd044
+4	12541	1772174990506500146	/home/irfan/exploring current code/boilerplate_completion/extensions/furthestPointSampling/build/temp.linux-x86_64-cpython-310/sampling.o	cdf1f3e5c57e012b
+5	14023	1772174990507500150	/home/irfan/exploring current code/boilerplate_completion/extensions/furthestPointSampling/build/temp.linux-x86_64-cpython-310/sampling_gpu.o	11ee4f6d1ddd044
