@@ -1,42 +1,106 @@
 # Point Cloud Completion Boilerplate
 
-A unified framework for point cloud completion research with 22 supported models.
+A unified framework for point cloud completion research with 31 supported models.
 
 ## Supported Models
 
+> **FP16 AMP** column indicates native support for `--precision fp16`. Models marked ❌ use CUDA extensions (e.g. `pointnet2_ops`, Chamfer) that don't support half-precision and must run in FP32 (or use automatic fp32 fallback via `--precision-fallback`).
+
 ### Point-Cloud-Only Models
-| Model | Config | Registry Name |
-|-------|--------|---------------|
-| AdaPoinTr | `configs/adapointr.yaml` | `AdaPoinTr` |
-| AnchorFormer | `configs/anchorformer.yaml` | `AnchorFormer` |
-| CRA-PCN | `configs/crapcn.yaml` | `CRAPCN` |
-| DSPF | `configs/dspf.yaml` | `DSPF` |
-| GRNet | `configs/grnet.yaml` | `GRNet` |
-| LEMA | `configs/lema.yaml` | `LEMA` |
-| MPGLNet | `configs/mpglnet.yaml` | `MPGLNet` |
-| MSN | `configs/msn.yaml` | `MSN` |
-| PCN | `configs/pcn.yaml` | `PCN` |
-| PFNet | `configs/pfnet.yaml` | `PFNet` |
-| PoinTr | `configs/pointr.yaml` | `PoinTr` |
-| SDT | `configs/sdt.yaml` | `SDT` |
-| SeedFormer | `configs/seedformer.yaml` | `SeedFormer` |
-| SnowFlakeNet | `configs/snowflakenet.yaml` | `SnowFlakeNet` |
-| SymmCompletion | `configs/symmcompletion.yaml` | `SymmCompletion` |
-| TopNet | `configs/topnet.yaml` | `TopNet` |
+| Model | Config | Registry Name | FP16 AMP |
+|-------|--------|---------------|----------|
+| AdaPoinTr | `configs/adapointr.yaml` | `AdaPoinTr` | ✅ |
+| AnchorFormer | `configs/anchorformer.yaml` | `AnchorFormer` | ❌ |
+| CRA-PCN | `configs/crapcn.yaml` | `CRAPCN` | ❌ |
+| DSPF | `configs/dspf.yaml` | `DSPF` | ✅ |
+| FBNet | `configs/fbnet.yaml` | `FBNetWrapper` | ❌ |
+| FFSC | `configs/ffsc.yaml` | `FFSCWrapper` | ❌ |
+| FoldingNet | `configs/foldingnet.yaml` | `FoldingNetWrapper` | ✅ |
+| FSCSVD | `configs/fscsvd.yaml` | `FSCSVDWrapper` | ❌ |
+| GRNet | `configs/grnet.yaml` | `GRNet` | ❌ |
+| LEMA | `configs/lema.yaml` | `LEMA` | ✅ |
+| MPGLNet | `configs/mpglnet.yaml` | `MPGLNet` | ❌ |
+| MSN | `configs/msn.yaml` | `MSN` | ❌ |
+| PCN | `configs/pcn.yaml` | `PCN` | ❌ |
+| PCTMA | `configs/pctma.yaml` | `PCTMAWrapper` | ✅ |
+| PFNet | `configs/pfnet.yaml` | `PFNet` | ✅ |
+| PMP-Net | `configs/pmpnet.yaml` | `PMPNetWrapper` | ❌ |
+| PMP-Net++ | `configs/pmpnetplus.yaml` | `PMPNetPlusWrapper` | ❌ |
+| PoinTr | `configs/pointr.yaml` | `PoinTr` | ✅ |
+| PointSea | `configs/pointsea.yaml` | `PointSeaWrapper` | ❌ |
+| SDT | `configs/sdt.yaml` | `SDT` | ❌ |
+| SeedFormer | `configs/seedformer.yaml` | `SeedFormer` | ✅ |
+| SnowFlakeNet | `configs/snowflakenet.yaml` | `SnowFlakeNet` | ❌ |
+| SVDFormer (New) | `configs/svdformer_new.yaml` | `SVDFormerNew` | ❌ |
+| SymmCompletion | `configs/symmcompletion.yaml` | `SymmCompletion` | ❌ |
+| TopNet | `configs/topnet.yaml` | `TopNet` | ❌ |
 
 ### Multi-Modal Models (image/depth + point cloud)
-| Model | Config | Registry Name | Extra Input |
-|-------|--------|---------------|-------------|
-| BiMPR-Net | `configs/bimprnet.yaml` | `BiMPRNet` | RGB image (224×224) |
-| GeoFormer | `configs/geoformer.yaml` | `GeoFormer` | Depth image |
-| IAET | `configs/iaet.yaml` | `IAET` | RGB image (224×224) |
-| MAENet | `configs/maenet.yaml` | `MAENet` | RGB image (224×224) |
+| Model | Config | Registry Name | Extra Input | FP16 AMP |
+|-------|--------|---------------|-------------|----------|
+| BiMPR-Net | `configs/bimprnet.yaml` | `BiMPRNet` | RGB image (224×224) | ✅ |
+| GeoFormer | `configs/geoformer.yaml` | `GeoFormer` | Depth image | ❌ |
+| IAET | `configs/iaet.yaml` | `IAET` | RGB image (224×224) | ✅ |
+| MAENet | `configs/maenet.yaml` | `MAENet` | RGB image (224×224) | ❌ |
 
 ### Special-Input Models
-| Model | Config | Registry Name | Extra Input |
-|-------|--------|---------------|-------------|
-| FDANet | `configs/fdanet.yaml` | `FDANet` | Section/skeleton pts |
-| TEETHM4T | `configs/teethm4t.yaml` | `TEETHM4T_Wrapper` | GT during training |
+| Model | Config | Registry Name | Extra Input | FP16 AMP |
+|-------|--------|---------------|-------------|----------|
+| FDANet | `configs/fdanet.yaml` | `FDANet` | Section/skeleton pts | ✅ |
+| TEETHM4T | `configs/teethm4t.yaml` | `TEETHM4T_Wrapper` | GT during training | ✅ |
+
+
+## Mixed Precision (AMP)
+
+The pipeline supports four precision modes via `--precision`:
+
+| Mode | Flag | Description |
+|------|------|-------------|
+| `fp32` | *(default)* | Standard full precision — works with all models |
+| `fp16` | `--precision fp16` | Half precision AMP — ~2× batch size, requires fp16-compatible CUDA ops |
+| `bf16` | `--precision bf16` | Brain float16 — more numerically stable than fp16 (RTX 4000+ / A100) |
+| `tf32` | `--precision tf32` | TensorFloat-32 matmuls (Ampere+ GPUs), no AMP context needed |
+
+The legacy `--amp` flag is equivalent to `--precision fp16`.
+
+### Native FP16 Support (13/32 models)
+
+These models passed `--precision fp16 --no-precision-fallback` (no fallback triggered):
+
+| ✅ FP16 Compatible | ❌ FP16 Incompatible (use fp32 or fallback) |
+|---|---|
+| AdaPoinTr | AnchorFormer — BatchNorm dtype mismatch |
+| BiMPR-Net | CRA-PCN — pointnet2 Half not supported |
+| DSPF | FBNet — pointnet2 Half not supported |
+| FDANet | FFSC — shape error |
+| FoldingNet | FSCSVD — shape error |
+| IAET | GeoFormer — shape error |
+| LEMA | GRNet — fvcore/Half not supported |
+| PCTMA | MAENet — fvcore/Half not supported |
+| PFNet | MPGLNet — OOM at BS=1 |
+| PoinTr | MSN — MSN expansion half mismatch |
+| SeedFormer | PCN — pointnet2 Half not supported |
+| TEETHM4T | PMP-Net / PMP-Net++ — fvcore/Half |
+| | PointSea — shape error |
+| | SDT — fvcore/Half not supported |
+| | SnowFlakeNet — pointnet2 Half not supported |
+| | SVDFormerNew — expects Half but gets Float |
+| | SymmCompletion — fvcore/Half not supported |
+| | TopNet — pointnet2 Half not supported |
+
+### Automatic Precision Fallback
+
+When `--precision fp16` or `--precision bf16` is used, the pipeline automatically retries failed models in FP32 if the error looks like an AMP dtype mismatch. This is **enabled by default**:
+
+```bash
+# Uses fp16 where supported, silently falls back to fp32 for incompatible models
+python verify_pipeline.py --all --precision fp16
+
+# Disable fallback to see true native fp16 support
+python verify_pipeline.py --all --precision fp16 --no-precision-fallback
+```
+
+The summary table shows `fp16->fp32` in the **Prec** column for any model that used the fallback.
 
 ## Quick Start
 
@@ -86,6 +150,9 @@ python verify_pipeline.py --all --quarantine-file configs/quarantine.txt
 
 # Disable debug retry (default is enabled)
 python verify_pipeline.py --all --no-debug-retry
+
+# Disable automatic fp16/bf16 -> fp32 fallback on AMP dtype mismatch
+python verify_pipeline.py --all --precision fp16 --no-precision-fallback
 
 # Override per-model timeout for isolated workers (seconds)
 python verify_pipeline.py --all --timeout 300
@@ -171,12 +238,13 @@ python train.py --config configs/pcn.yaml --batch_size 64 --lr 0.0005 --gpu 0,1,
 ├── configs/                  # YAML configuration files
 │   ├── default.yaml          # Base config with defaults
 │   ├── config.py             # Config loader with inheritance
-│   └── *.yaml                # Per-model configs (22 models)
+│   └── *.yaml                # Per-model configs (31 models)
 ├── models/                   # Model implementations
 │   ├── BaseModel.py          # Template for new models
 │   ├── build.py              # Model registry
 │   ├── wrappers.py           # Wrappers for CRAPCN/MSN/PFNet/SeedFormer
 │   ├── new_wrappers.py       # Wrappers for 10 new models
+│   ├── new_wrappers2.py      # Additional wrappers for newly added models
 │   ├── DSPF/                 # DSPF source files
 │   ├── SDT/                  # SDT source files
 │   ├── MPGLNet_src/          # MPGLNet source files

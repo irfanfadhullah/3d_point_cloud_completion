@@ -24,3 +24,6 @@ from . import DummyModel
 # New models adopted from new_unmerge repository
 # (DSPF, SDT, MPGLNet, LEMA, BiMPRNet, IAET, MAENet, GeoFormer, FDANet, TEETHM4T)
 from . import new_wrappers
+
+# 8 more new models integrated recently
+from . import new_wrappers2

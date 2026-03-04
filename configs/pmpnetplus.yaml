@@ -1,0 +1,12 @@
+_base_: default.yaml
+
+model:
+  name: "PMPNetPlusWrapper"
+  config: {}
+
+output:
+  out_path: "results/pmpnetplus"
+
+
+# Mixed Precision Compatibility
+amp_fp16: false  # CUDA extensions do not support half precision; use fp32

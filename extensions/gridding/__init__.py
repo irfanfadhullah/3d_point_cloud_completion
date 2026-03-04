@@ -39,7 +39,9 @@ class Gridding(torch.nn.Module):
     def forward(self, ptcloud):
         ptcloud = ptcloud * self.scale
         # Clamp to grid bounds to prevent CUDA illegal memory access
-        ptcloud = torch.clamp(ptcloud, -self.scale + 1, self.scale - 1)
+        # Max bound must be strictly less than (scale - 1) to prevent `upper_x += 1` out-of-bounds index
+        eps = 1e-4
+        ptcloud = torch.clamp(ptcloud, -self.scale + 1, self.scale - 1 - eps)
         _ptcloud = torch.split(ptcloud, 1, dim=0)
         grids = []
         for p in _ptcloud:

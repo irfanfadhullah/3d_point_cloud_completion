@@ -17,3 +17,7 @@ train:
   gamma: 0.7
 
 output_path: results/dspf
+
+
+# Mixed Precision Compatibility
+amp_fp16: true  # All ops support half precision; AMP training possible

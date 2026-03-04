@@ -232,7 +232,5 @@ class SymmCompletion(nn.Module):
             fine2 = torch.cat([fine2, point_cloud],dim=1).contiguous()
 
         rets = [coarse.transpose(2,1).contiguous(), fine1, fine2]
-        self.pred_dense_point = rets[-1]
-
         return rets
 

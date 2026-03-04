@@ -1,0 +1,12 @@
+_base_: default.yaml
+
+model:
+  name: "PCTMAWrapper"
+  config: {}
+
+output:
+  out_path: "results/pctma"
+
+
+# Mixed Precision Compatibility
+amp_fp16: true  # All ops support half precision; AMP training possible

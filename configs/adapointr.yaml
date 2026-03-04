@@ -48,3 +48,7 @@ train:
 
 output:
   out_path: "results/adapointr"
+
+
+# Mixed Precision Compatibility
+amp_fp16: true  # All ops support half precision; AMP training possible

@@ -22,7 +22,7 @@ dataset:
   test: "ShapeNet"
 
 train:
-  batch_size: 16
+  batch_size: 8
   n_epochs: 400
   learning_rate: 0.001
   lr_decay: 150
@@ -30,3 +30,7 @@ train:
 
 output:
   out_path: "results/anchorformer"
+
+
+# Mixed Precision Compatibility
+amp_fp16: false  # CUDA extensions do not support half precision; use fp32

@@ -20,3 +20,7 @@ train:
   gamma: 0.5
 
 output_path: results/sdt
+
+
+# Mixed Precision Compatibility
+amp_fp16: false  # CUDA extensions do not support half precision; use fp32
